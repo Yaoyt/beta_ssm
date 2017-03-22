@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace指定我们的到具体的bean -->
-<mapper namespace="com.beta.ssm.dao.UserDao">
+<mapper namespace="com.beta.basic.dao.UserDao">
 
     <!--查找-->
     <select id="findOneById" resultType="User" parameterType="String">

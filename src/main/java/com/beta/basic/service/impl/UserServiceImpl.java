@@ -1,8 +1,8 @@
-package com.beta.ssm.service.impl;
+package com.beta.basic.service.impl;
 
-import com.beta.ssm.dao.UserDao;
-import com.beta.ssm.domain.User;
-import com.beta.ssm.service.UserService;
+import com.beta.basic.dao.UserDao;
+import com.beta.basic.domain.User;
+import com.beta.basic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

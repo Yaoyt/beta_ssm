@@ -1,7 +1,7 @@
-package com.beta.ssm.service;
+package com.beta.basic.service;
 
 
-import com.beta.ssm.domain.User;
+import com.beta.basic.domain.User;
 
 /**
  * Created by yaoyt on 16/12/12.

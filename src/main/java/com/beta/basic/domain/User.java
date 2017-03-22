@@ -1,4 +1,4 @@
-package com.beta.ssm.domain;
+package com.beta.basic.domain;
 
 import com.alibaba.fastjson.JSON;
 

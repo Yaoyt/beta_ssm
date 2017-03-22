@@ -1,4 +1,4 @@
-package com.beta.ssm.dao;
+package com.beta.basic.dao;
 
 import java.io.Serializable;
 import java.util.List;

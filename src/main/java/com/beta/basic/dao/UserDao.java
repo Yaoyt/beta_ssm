@@ -1,7 +1,7 @@
-package com.beta.ssm.dao;
+package com.beta.basic.dao;
 
 
-import com.beta.ssm.domain.User;
+import com.beta.basic.domain.User;
 
 import java.io.Serializable;
 import java.util.List;

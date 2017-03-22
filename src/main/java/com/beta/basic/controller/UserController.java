@@ -1,9 +1,9 @@
-package com.beta.ssm.controller;
+package com.beta.basic.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.beta.ssm.domain.ResponseObj;
-import com.beta.ssm.domain.User;
-import com.beta.ssm.service.UserService;
+import com.beta.basic.domain.ResponseObj;
+import com.beta.basic.domain.User;
+import com.beta.basic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;

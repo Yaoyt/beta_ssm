@@ -1,4 +1,4 @@
-package com.beta.ssm.domain;
+package com.beta.basic.domain;
 
 /**
  * Created by yaoyt on 16/12/13.

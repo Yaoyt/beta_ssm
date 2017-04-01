@@ -39,7 +39,7 @@
             var password = $("#p").val();
             $.ajax({
                 type: "POST",
-                url: '<%=request.getContextPath()%>/user/login',
+                url: '<%=request.getContextPath()%>/login',
                 data: {loginId: loginname, pwd: password},
                 dataType: 'json',   //当这里指定为json的时候，获取到了数据后会自己解析的，只需要 返回值.字段名称 就能使用了
                 cache: false,

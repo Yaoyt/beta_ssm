@@ -57,7 +57,7 @@
 
     <!-- ================ Shiro start ================ -->
     <!-- 項目自定义的Realm -->
-    <bean id="ShiroRealm" class="com.beta.basic.interceptor.shiro.ShiroRealm"></bean>
+    <bean id="ShiroRealm" class="com.beta.basic.shiro.realms.ShiroRealm"></bean>
     <!-- 定义shiro 用的securityManager-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="ShiroRealm"/>
@@ -66,20 +66,16 @@
     <!-- Shiro Filter -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-
-        <property name="loginUrl" value="/login"/>
-
+        <property name="loginUrl" value="/initLogin"/>
         <property name="successUrl" value="/home"/>
-
-        <property name="unauthorizedUrl" value="/login"/>
-
+        <property name="unauthorizedUrl" value="/initLogin"/>
         <property name="filterChainDefinitions">
             <value>
+                /login = anon
                 /static/**/** = anon
                 /uploadFiles/uploadImgs/** = anon
                 /uploadFiles/images/** = anon
                 /code.do = anon
-                /login_login = anon
                 /app**/** = anon
                 /weixin/** = anon
                 /portal/** = anon

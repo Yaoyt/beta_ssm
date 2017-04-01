@@ -80,60 +80,7 @@ public class UserController {
     }
 
 
-    /**
-     * 登录接口，因为json数据外层一般都是Object类型，所以返回值必须是Object<br/>
-     *  这里的地址是： 域名/userAction/login
-     *
-     * @param req
-     * @param user
-     * @return
-     */
-    @RequestMapping(value = "/login"    //内层地址
-            , method = RequestMethod.POST   //限定请求方式
-            , produces = "application/json; charset=utf-8") //设置返回值是json数据类型
-    @ResponseBody
-    public Object login(HttpServletRequest request, HttpServletResponse response, User user, HttpSession session) throws Exception {
-        Object result;
-        if (null == user) {
-            responseObj = new ResponseObj<User>();
-            responseObj.setCode(ResponseObj.EMPUTY);
-            responseObj.setMsg("登录信息不能为空");
-            result = JSON.toJSONString(responseObj);   //通过gson把java bean转换为json
-            return result; //返回json
-        }
-        if (StringUtils.isEmpty(user.getLoginId()) || StringUtils.isEmpty(user.getPwd())) {
-            responseObj = new ResponseObj<User>();
-            responseObj.setCode(ResponseObj.FAILED);
-            responseObj.setMsg("用户名或密码不能为空");
-            result = JSON.toJSONString(responseObj);
-            return result;
-        }
-        //查找用户
-        User user1 = userService.findUser(user);
-        if (null == user1) {
-            responseObj = new ResponseObj<User>();
-            responseObj.setCode(ResponseObj.EMPUTY);
-            responseObj.setMsg("未找到该用户");
-            result = JSON.toJSONString(responseObj);
-        } else {
-            if (user.getPwd().equals(user1.getPwd())) {
-                user1.setPwd(session.getId());
-                user1.setNextUrl(request.getContextPath() + "/home");
-                responseObj = new ResponseObj<User>();
-                responseObj.setCode(ResponseObj.OK);    //登录成功，状态为1
-                responseObj.setMsg(ResponseObj.OK_STR);
-                responseObj.setData(user1); //登陆成功后返回用户信息
-                session.setAttribute("userInfo", user1);
-                result = JSON.toJSONString(responseObj);
-            } else {
-                responseObj = new ResponseObj<User>();
-                responseObj.setCode(ResponseObj.FAILED);
-                responseObj.setMsg("用户密码错误");
-                result = JSON.toJSONString(responseObj);
-            }
-        }
-        return result;
-    }
+
 
     //我们在UserController这个控制器里添加这个方法
     @RequestMapping(value = "/uploadHeadPic"

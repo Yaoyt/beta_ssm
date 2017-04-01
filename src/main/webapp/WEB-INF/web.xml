@@ -43,7 +43,7 @@
     </servlet-mapping>
 
     <!-- The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml -->
-   <!-- <filter>
+    <filter>
         <filter-name>shiroFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
         <init-param>
@@ -51,13 +51,13 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
-    &lt;!&ndash; Make sure any request you want accessible to Shiro is filtered. /* catches all &ndash;&gt;
-    &lt;!&ndash; requests.  Usually this filter mapping is defined first (before all others) to &ndash;&gt;
-    &lt;!&ndash; ensure that Shiro works in subsequent filters in the filter chain:             &ndash;&gt;
+    <!-- Make sure any request you want accessible to Shiro is filtered. /* catches all -->
+    <!-- requests.  Usually this filter mapping is defined first (before all others) to -->
+    <!-- ensure that Shiro works in subsequent filters in the filter chain:             -->
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
 
     <!-- spring框架提供的字符集过滤器 -->
     <!-- spring Web MVC框架提供了org.springframework.web.filter.CharacterEncodingFilter用于解决POST方式造成的中文乱码问题  -->

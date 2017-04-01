@@ -15,4 +15,7 @@ public interface UserService extends BaseService<User> {
     //查询用户
     public User findUser(User user) throws Exception;
 
+    public User findUser(String username, String password);
+
+    public User findUser(String username);
 }

@@ -71,7 +71,12 @@
         <!-- cn.acheng1314是我的应用程序的包名,你们需要使用你们自己的包名,也就是前面我们提到过的GroupId -->
         <property name="typeAliasesPackage" value="com.beta.basic.domain"/>
         <!-- 扫描sql配置文件:mapper需要的xml文件 -->
-        <property name="mapperLocations" value="classpath:mybatis/mapper/basic/dao/**.xml"/>
+        <property name="mapperLocations" value="classpath:mybatis/mapper/*/dao/**.xml"/>
+    </bean>
+
+    <!-- 3.1 声明sqlSessionTemplate, 如果DAO中需要使用到sqlSession的话-->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory"/>
     </bean>
 
     <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->

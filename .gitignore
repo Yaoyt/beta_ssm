@@ -4,3 +4,4 @@ target/
 *.impl
 debug*
 *.iml
+src/main/webapp/WEB-INF/classes

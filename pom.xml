@@ -93,6 +93,12 @@
             <artifactId>spring-test</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
+        <!-- 4)Spring aspectj -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
 
         <!-- redis客户端:Jedis -->
         <dependency>

@@ -14,7 +14,7 @@
             http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-    <!-- 启用注解 -->
+    <!-- 启用注解-->
     <context:annotation-config/>
 
     <!-- 启动组件扫描，排除@Controller组件，该组件由SpringMVC配置文件扫描 -->
@@ -67,11 +67,11 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
 
-        <property name="loginUrl" value="/login_toLogin"/>
+        <property name="loginUrl" value="/login"/>
 
-        <property name="successUrl" value="/main/index"/>
+        <property name="successUrl" value="/home"/>
 
-        <property name="unauthorizedUrl" value="/login_toLogin"/>
+        <property name="unauthorizedUrl" value="/login"/>
 
         <property name="filterChainDefinitions">
             <value>

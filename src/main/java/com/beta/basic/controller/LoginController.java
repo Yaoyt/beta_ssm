@@ -86,6 +86,7 @@ public class LoginController {
             String password = PasswordUtil.encryptByPwdAndSalt(user.getPwd(),user.getLoginId());  // 将密码进行加密,放入到token中,与realm中从数据库中查询的密码进行比较.
             // shiro加入身份验证
             UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginId(), password);
+            token.setRememberMe(true);
             Subject subject = SecurityUtils.getSubject();
             try {
                 subject.login(token);

@@ -232,7 +232,10 @@
                                 <input type="password" id="p" name="pwd" class="inputstyle"/>
                             </div>
                         </div>
-
+                        <div class="rememberMeArea" id="rememberMeArea">
+                            <label class="input-remember" for="r">记住我</label>
+                            <input type="checkbox" id="r" name="rememberMe" class="input-remember-checkbox"/>
+                        </div>
                         <div style="padding-left:50px;margin-top:20px;">
                             <input type="button"
                                    id="btn_login"

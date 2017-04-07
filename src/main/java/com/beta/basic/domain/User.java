@@ -20,6 +20,15 @@ public class User implements Serializable {
     private String photoUrl;    //头像地址
     private boolean used = true;   //是否可用,默认值是true
     private String nextUrl;
+    private String salt; //加密盐
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     public String getNextUrl() {
         return nextUrl;

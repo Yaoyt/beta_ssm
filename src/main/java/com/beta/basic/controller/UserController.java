@@ -103,6 +103,19 @@ public class UserController {
     }
 
 
+    //我们在UserController这个控制器里添加这个方法
+    @RequestMapping(value = "/userinfo"
+            , produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String userinfo( HttpServletRequest request) {
+
+        responseObj = new ResponseObj();
+        responseObj.setCode(ResponseObj.OK);
+        responseObj.setMsg("用户信息123123123");
+        return JSON.toJSONString(responseObj);
+    }
+
+
 
     public UserService getUserService() {
         return userService;

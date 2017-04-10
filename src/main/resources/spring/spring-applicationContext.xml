@@ -4,6 +4,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/aop
@@ -11,7 +12,9 @@
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/tx
-            http://www.springframework.org/schema/tx/spring-tx.xsd">
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util.xsd">
 
 
     <!-- 启用注解-->
@@ -70,17 +73,36 @@
     </bean>
 
     <!-- 項目自定义的Realm -->
-    <bean id="ShiroRealm" class="com.beta.basic.shiro.realms.ShiroRealm"></bean>
-    <!-- 定义shiro 用的securityManager-->
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="ShiroRealm"/>
-        <property name="rememberMeManager" ref="rememberMeManager"/>
+    <bean id="shiroRealm" class="com.beta.basic.shiro.realms.ShiroRealm"></bean>
+    <!-- token 校验使用的Realm for token authc -->
+    <bean id="tokenRealm" class="com.beta.basic.shiro.realms.TokenRealm"></bean>
+
+    <!-- Subject工厂 for token authc -->
+    <bean id="subjectFactory" class="com.beta.basic.shiro.StatelessSubjectFactory"/>
+
+    <!-- 会话管理器 for token authc  -->
+    <bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
+        <property name="sessionValidationSchedulerEnabled" value="false"/>
     </bean>
 
-    <!--<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>-->
+    <!-- 定义shiro 用的securityManager-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--<property name="realm" ref="shiroRealm"/>-->
+        <!-- <property name="rememberMeManager" ref="rememberMeManager"/>-->
+
+        <!-- for token authc start-->
+        <property name="realm" ref="tokenRealm"/>
+        <property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled"
+                  value="false"/>
+        <property name="subjectFactory" ref="subjectFactory"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <!-- for token authc end-->
+
+    </bean>
 
 
-
+    <!-- filter for token authc -->
+    <bean id="tokenAuthcFilter" class="com.beta.basic.shiro.filter.TokenAuthcFilter"/>
 
 
     <!-- Shiro Filter -->
@@ -89,6 +111,11 @@
         <property name="loginUrl" value="/initLogin"/>
         <property name="successUrl" value="/home"/>
         <property name="unauthorizedUrl" value="/initLogin"/>
+        <property name="filters">
+            <util:map>
+                <entry key="tokenAuthc" value-ref="tokenAuthcFilter"/>
+            </util:map>
+        </property>
         <property name="filterChainDefinitions">
             <value>
                 /login = anon
@@ -103,6 +130,7 @@
                 /js/** = anon
                 /images/** = anon
                 /home = user
+                /user/**=tokenAuthc
                 /** = authc
             </value>
         </property>

@@ -87,8 +87,8 @@ public class LoginController {
             // shiro加入身份验证
             UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginId(), password);
             token.setRememberMe(true);
-            Subject subject = SecurityUtils.getSubject();
             try {
+                Subject subject = SecurityUtils.getSubject();
                 subject.login(token);
                 user1.setNextUrl(request.getContextPath() + "/home");
                 responseObj = new ResponseObj<User>();

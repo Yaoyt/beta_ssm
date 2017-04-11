@@ -58,6 +58,9 @@
         <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
     </aop:config>
 
+
+
+
     <!-- ================ Shiro start ================ -->
     <!-- rememberMeCookie：即记住我的Cookie，保存时长30天； -->
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">

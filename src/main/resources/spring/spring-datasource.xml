@@ -95,8 +95,22 @@
 
 
     <!-- Jedis start -->
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="10"></property>
+        <property name="maxIdle" value="10"></property>
+        <property name="minIdle" value="2"></property>
+        <property name="maxWaitMillis" value="15000"></property>
+        <property name="minEvictableIdleTimeMillis" value="300000"></property>
+        <property name="numTestsPerEvictionRun" value="3"></property>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+        <property name="testOnBorrow" value="true"></property>
+        <property name="testOnReturn" value="true"></property>
+        <property name="testWhileIdle" value="true"></property>
+    </bean>
+
     <bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-          p:use-pool="true" p:hostName="${redis.host}" p:port="${redis.port}" p:password="${redis.password}" />
+          p:use-pool="true" p:hostName="${redis.host}" p:port="${redis.port}" p:password="${redis.password}" p:poolConfig-ref="jedisPoolConfig" />
 
     <!-- redis template definition -->
     <bean id="stringRedisTemplate"

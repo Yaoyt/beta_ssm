@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.beta.basic.domain.ResponseObj;
 import com.beta.basic.domain.User;
 import com.beta.basic.service.UserService;
+import com.beta.basic.sys.SpringContextHolder;
 import com.beta.basic.utils.PasswordUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -43,6 +44,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/initLogin",method = RequestMethod.GET)
     public String login(){
+        System.out.println(SpringContextHolder.getBean("userService"));
 
         return "login";
     }

@@ -14,7 +14,14 @@
     </welcome-file-list>
 
     <!-- 如果是用maven命令生成的xml，需要修改servlet版本为3.1 -->
-
+    <!--声明spring的配置文件,与co-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/spring-*.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <!-- 配置DispatcherServlet -->
     <servlet>
@@ -28,7 +35,6 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
-                classpath:spring/spring-*.xml,
                 classpath:springmvc/springmvc-*.xml
             </param-value>
         </init-param>

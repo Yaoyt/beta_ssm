@@ -40,9 +40,6 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!-- scan the package and the sub package -->
-    <context:component-scan base-package="com.beta.basic"/>
-
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!--下面设置的是上传文件的最大大小-->
         <property name="maxUploadSize" value="10000000"/>

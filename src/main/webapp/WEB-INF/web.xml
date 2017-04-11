@@ -35,7 +35,7 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
-                classpath:springmvc/springmvc-*.xml
+                classpath:springmvc/springmvc-web.xml
             </param-value>
         </init-param>
     </servlet>

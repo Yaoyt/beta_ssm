@@ -1,6 +1,7 @@
 package com.beta.basic.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.IntegerCodec;
 import com.beta.basic.domain.ResponseObj;
 import com.beta.basic.domain.User;
 import com.beta.basic.service.UserService;
@@ -32,7 +33,7 @@ public class UserController {
     /**
      * 为什么返回值是一个ModelAndView，ModelAndView代表一个web页面<br/>
      * setViewName是设置一个jsp页面的名称
-     * @param req   http请求
+     * @param    http请求
      * @param user  发起请求后，spring接收到请求，然后封装的bean数据
      * @return  返回一个web页面
      * @throws Exception
@@ -115,6 +116,15 @@ public class UserController {
         return JSON.toJSONString(responseObj);
     }
 
+    //我们在UserController这个控制器里添加这个方法
+    @RequestMapping(value = "/test"
+            , produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String test( HttpServletRequest request) {
+
+        System.out.println(Integer.valueOf("adb"));
+        return JSON.toJSONString(responseObj);
+    }
 
 
     public UserService getUserService() {

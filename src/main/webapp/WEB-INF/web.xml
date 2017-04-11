@@ -26,7 +26,7 @@
     <!-- 配置DispatcherServlet -->
     <servlet>
         <display-name>ssm</display-name>    <!-- 项目名称 -->
-        <servlet-name>mvc-dispatcher</servlet-name> <!-- mvc调度器 -->
+        <servlet-name>dispatcherServlet</servlet-name> <!-- mvc调度器 -->
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!-- 配置springMVC需要加载的配置文件
             spring-showcase.xml,spring-service.xml,spring-web.xml
@@ -40,7 +40,7 @@
         </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>mvc-dispatcher</servlet-name>
+        <servlet-name>dispatcherServlet</servlet-name>
         <!-- 默认匹配所有的静态资源,此处配置出错,会产生错误500 -->
         <url-pattern>/</url-pattern>
         <url-pattern>/js/*</url-pattern>

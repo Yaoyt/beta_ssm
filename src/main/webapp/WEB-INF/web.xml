@@ -14,7 +14,7 @@
     </welcome-file-list>
 
     <!-- 如果是用maven命令生成的xml，需要修改servlet版本为3.1 -->
-    <!--声明spring的配置文件,与co-->
+    <!--声明spring的配置文件,与Spring 的ContextLoadListner-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring/spring-*.xml</param-value>

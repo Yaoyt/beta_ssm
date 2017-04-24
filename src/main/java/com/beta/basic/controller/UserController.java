@@ -1,10 +1,9 @@
 package com.beta.basic.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.IntegerCodec;
 import com.beta.basic.domain.ResponseObj;
 import com.beta.basic.domain.User;
-import com.beta.basic.redis.RedisUtil;
+import com.beta.basic.redis.StringRedisUtil;
 import com.beta.basic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +29,7 @@ public class UserController {
     @Autowired
     private UserService userService;    //自动载入Service对象
     @Autowired
-    private RedisUtil redisUtil;
+    private StringRedisUtil stringRedisUtil;
     private ResponseObj responseObj;    //bean对象
 
     /**
@@ -124,8 +123,8 @@ public class UserController {
             , produces = "application/json; charset=utf-8")
     @ResponseBody
     public String test( HttpServletRequest request) {
-        redisUtil.set("yaoyt","123123123");
-        System.out.println(redisUtil.get("yaoyt"));
+        stringRedisUtil.set("yaoyt","123123123");
+        System.out.println(stringRedisUtil.get("yaoyt"));
         System.out.println(Integer.valueOf("adb"));
         return JSON.toJSONString(responseObj);
     }

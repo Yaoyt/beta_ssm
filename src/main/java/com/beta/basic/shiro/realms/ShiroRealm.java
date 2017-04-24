@@ -1,20 +1,15 @@
 package com.beta.basic.shiro.realms;
 
-import com.beta.basic.domain.Menu;
 import com.beta.basic.domain.User;
 import com.beta.basic.service.UserService;
 import com.beta.basic.shiro.Principal;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by yaoyt on 17/4/1.
@@ -58,7 +53,25 @@ public class ShiroRealm extends AuthorizingRealm {
 	 */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        Principal principal = (Principal) getAvailablePrincipal(principalCollection);
+        if(null == principalCollection){
+            return null;
+        }
+        AuthorizationInfo info = null;
+        Cache<Object,AuthorizationInfo> cache = getAuthorizationCache();
+        if(cache != null){
+            Object key = getAuthenticationCacheKey(principalCollection);
+            info = cache.get(key);
+        }
+        if(null == info){
+            info = doGetAuthorizationInfo(principalCollection);
+            if(null != info && null != cache){
+                Object key = getAuthenticationCacheKey(principalCollection);
+                cache.put(key,info);
+            }
+        }
+        return info;
+
+        /*Principal principal = (Principal) getAvailablePrincipal(principalCollection);
         User user = userService.findUser(principal.getLoginName());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -72,7 +85,7 @@ public class ShiroRealm extends AuthorizingRealm {
             return info;
         } else {
             return null;
-        }
+        }*/
     }
 
 }

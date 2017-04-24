@@ -3,8 +3,9 @@ package com.beta.basic.controller;
 import com.alibaba.fastjson.JSON;
 import com.beta.basic.domain.ResponseObj;
 import com.beta.basic.domain.User;
+import com.beta.basic.redis.RedisUtil;
+import com.beta.basic.redis.StringRedisUtil;
 import com.beta.basic.service.UserService;
-import com.beta.basic.sys.SpringContextHolder;
 import com.beta.basic.utils.PasswordUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -35,8 +36,14 @@ public class LoginController {
     @Autowired
     private UserService userService;    //自动载入Service对象
     private ResponseObj responseObj;    //bean对象
+    @Autowired
+    private RedisUtil redisUtil;  // redis 辅助类
+    @Autowired
+    private StringRedisUtil stringRedisUtil; // string redis util
 
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+
+
 
     /**
      * 登陆页面
@@ -44,7 +51,12 @@ public class LoginController {
      */
     @RequestMapping(value = "/initLogin",method = RequestMethod.GET)
     public String login(){
-        System.out.println(SpringContextHolder.getBean("userService"));
+        /*User u = new User();
+        u.setPwd("password");
+        redisUtil.setex("user",u,100L);
+        System.out.println(((User)redisUtil.get("user")).toString());
+        stringRedisUtil.setex("yaoyt","yaoyunting",123L);
+        System.out.println(stringRedisUtil.get("yaoyt"));*/
 
         return "login";
     }
@@ -88,7 +100,7 @@ public class LoginController {
             String password = PasswordUtil.encryptByPwdAndSalt(user.getPwd(),user.getLoginId());  // 将密码进行加密,放入到token中,与realm中从数据库中查询的密码进行比较.
             // shiro加入身份验证
             UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginId(), password);
-            token.setRememberMe(true);
+            //token.setRememberMe(true);
             try {
                 Subject subject = SecurityUtils.getSubject();
                 subject.login(token);

@@ -77,36 +77,50 @@
 
     <!-- 項目自定义的Realm -->
     <bean id="shiroRealm" class="com.beta.basic.shiro.realms.ShiroRealm"></bean>
-    <!-- token 校验使用的Realm for token authc -->
-    <bean id="tokenRealm" class="com.beta.basic.shiro.realms.TokenRealm"></bean>
 
-    <!-- Subject工厂 for token authc -->
-    <bean id="subjectFactory" class="com.beta.basic.shiro.StatelessSubjectFactory"/>
-
-    <!-- 会话管理器 for token authc  -->
-    <bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
-        <property name="sessionValidationSchedulerEnabled" value="false"/>
+    <!-- session会话存储的实现类 -->
+    <bean id="redisSessionDAO" class="com.beta.basic.shiro.session.dao.RedisSessionDAO">
     </bean>
+
+    <bean id="redisCacheManager" class="com.beta.basic.shiro.cache.RedisCacheManager">
+    </bean>
+
+    <!-- 自定义sessionManager -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 设置全局会话超时时间，默认30分钟(1800000) -->
+        <property name="globalSessionTimeout" value="1800000" />
+        <!-- 是否在会话过期后会调用SessionDAO的delete方法删除会话 默认true -->
+        <property name="deleteInvalidSessions" value="true" />
+        <!-- 会话验证器调度时间 -->
+        <property name="sessionValidationInterval" value="1800000" />
+        <!-- session存储的实现 -->
+        <property name="sessionDAO" ref="redisSessionDAO" />
+        <!-- sessionIdCookie的实现,用于重写覆盖容器默认的JSESSIONID -->
+        <property name="sessionIdCookie">
+            <bean class="org.apache.shiro.web.servlet.SimpleCookie">
+                <constructor-arg name="name" value="SHRIOSESSIONID"/>
+                <property name="path" value="/ssm" />
+                <property name="httpOnly" value="true"/>
+            </bean>
+        </property>
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <!-- 定时检查失效的session -->
+        <property name="sessionValidationSchedulerEnabled" value="true" />
+        <property name="sessionListeners">
+            <list>
+                <ref bean="sessionListener1"></ref>
+            </list>
+        </property>
+    </bean>
+
 
     <!-- 定义shiro 用的securityManager-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!--<property name="realm" ref="shiroRealm"/>-->
-        <!-- <property name="rememberMeManager" ref="rememberMeManager"/>-->
-
-        <!-- for token authc start-->
-        <property name="realm" ref="tokenRealm"/>
-        <property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled"
-                  value="false"/>
-        <property name="subjectFactory" ref="subjectFactory"/>
-        <property name="sessionManager" ref="sessionManager"/>
-        <!-- for token authc end-->
-
+        <property name="realm" ref="shiroRealm"/>
+        <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
+        <property name="sessionManager" ref="sessionManager" />
+        <!--<property name="cacheManager" ref="redisCacheManager" />-->
     </bean>
-
-
-    <!-- filter for token authc -->
-    <bean id="tokenAuthcFilter" class="com.beta.basic.shiro.filter.TokenAuthcFilter"/>
-
 
     <!-- Shiro Filter -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -114,11 +128,6 @@
         <property name="loginUrl" value="/initLogin"/>
         <property name="successUrl" value="/home"/>
         <property name="unauthorizedUrl" value="/initLogin"/>
-        <property name="filters">
-            <util:map>
-                <entry key="tokenAuthc" value-ref="tokenAuthcFilter"/>
-            </util:map>
-        </property>
         <property name="filterChainDefinitions">
             <value>
                 /login = anon
@@ -132,11 +141,15 @@
                 /css/** = anon
                 /js/** = anon
                 /images/** = anon
-                /home = user
-                /user/**=tokenAuthc
+                /home = authc
+                /user/**=authc
                 /** = authc
             </value>
         </property>
     </bean>
+
+    <!-- 保证实现shiro内部的生命周期函数bean的执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
 
 </beans>

@@ -1,5 +1,6 @@
 package com.beta.basic.service.impl;
 
+import com.beta.basic.dao.ImpalaCommonDao;
 import com.beta.basic.dao.UserDao;
 import com.beta.basic.domain.User;
 import com.beta.basic.service.UserService;
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ImpalaCommonDao impalaCommonDao;
 
     public void add(User user) throws Exception {
         //先检查用户是否存在
@@ -74,6 +78,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUser(String username) {
         return userDao.findOneById(username);
+    }
+
+    @Override
+    public void impalaTest() {
+        impalaCommonDao.impalaTest();
     }
 
     public UserDao getUserDao() {

@@ -57,7 +57,8 @@ public class LoginController {
         System.out.println(((User)redisUtil.get("user")).toString());
         stringRedisUtil.setex("yaoyt","yaoyunting",123L);
         System.out.println(stringRedisUtil.get("yaoyt"));*/
-
+        // 测试Impala Dao
+        userService.impalaTest();
         return "login";
     }
 

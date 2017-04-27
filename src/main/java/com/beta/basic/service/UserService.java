@@ -18,4 +18,6 @@ public interface UserService extends BaseService<User> {
     public User findUser(String username, String password);
 
     public User findUser(String username);
+
+    public void impalaTest();
 }
